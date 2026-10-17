@@ -1,4 +1,4 @@
-# 👩🏻‍⚕️ Heart Disease Dataset
+# 👩🏻‍⚕️ Medical Cost Personal Datasets
 
 ## Solution
 
