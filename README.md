@@ -51,5 +51,7 @@ GROUP BY
 HAVING COUNT(*) > 1;
 ```
 Answer:
+<img width="450" height="47" alt="Screenshot 2026-10-20 110449" src="https://github.com/user-attachments/assets/9ffa549e-8126-4e63-8237-6259a0381756" />
+
 
 
