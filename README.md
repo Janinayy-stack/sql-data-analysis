@@ -1,4 +1,4 @@
-<img width="432" height="37" alt="image" src="https://github.com/user-attachments/assets/6dd7db1e-f4a6-4279-af71-ebdd71feac9c" /># 👩🏻‍⚕️ Medical Cost Personal Datasets
+# 👩🏻‍⚕️ Medical Cost Personal Datasets
 
 ## 📌 Solution
 
