@@ -106,6 +106,55 @@ Key Findings
 - Charges range from $1,121.87 to $63,770.43, indicating substantial variability.
 - The standard deviation of $12,105.48 reflects considerable dispersion in insurance charges.
 
+## Analysis 3: Insurance Charges by Smoking Status
+```sql
+SELECT
+    smoker,
+    COUNT(*) AS total_individuals,
+    ROUND(AVG(charges), 2) AS avg_charges,
+    ROUND(MIN(charges), 2) AS min_charges,
+    ROUND(MAX(charges), 2) AS max_charges,
+    ROUND(STDDEV(charges), 2) AS std_charges
+FROM insurance
+GROUP BY smoker
+ORDER BY avg_charges DESC;
+```
+Answer: <img width="486" height="57" alt="image" src="https://github.com/user-attachments/assets/d1a63392-79dc-40fa-8269-19ca0d4b5813" />
+
+-- Median by Smoking Status
+```sql
+WITH smokestatus AS (
+    SELECT
+        smoker,
+        charges,
+        ROW_NUMBER() OVER (
+            PARTITION BY smoker
+            ORDER BY charges
+        ) AS row_num,
+        COUNT(*) OVER (
+            PARTITION BY smoker
+        ) AS total_rows
+    FROM insurance
+)
+SELECT
+    smoker,
+    ROUND(AVG(charges), 2) AS median_charges
+FROM smokestatus
+WHERE row_num IN (
+    FLOOR((total_rows + 1) / 2),
+    CEIL((total_rows + 1) / 2)
+)
+GROUP BY smoker;	
+```
+Answer:
+<img width="168" height="57" alt="image" src="https://github.com/user-attachments/assets/db5728ea-e219-479e-a973-db113b282213" />
+
+Key Findings
+- Smokers have higher average insurance charges ($32,050.23) than nonsmokers ($8,434.27), approximately 3.8 times higher. They also have higher maximum charges and greater variability in charges.
+
+## Analysis 4: Insurance Charges by Individual Characteristics
+
+
 
 
     
