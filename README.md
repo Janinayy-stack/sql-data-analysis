@@ -23,3 +23,7 @@ SELECT
     SUM(charges IS NULL) AS missing_charges
 FROM insurance;
 ```
+Answer:
+<img width="605" height="33" alt="image" src="https://github.com/user-attachments/assets/d5a73272-122b-45ba-9cdc-b9484e0e3379" />
+There are no missing values in any of the variables.
+
