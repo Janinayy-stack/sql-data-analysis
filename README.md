@@ -1,4 +1,4 @@
-# 👩🏻‍⚕️ Medical Cost Personal Datasets
+<img width="432" height="37" alt="image" src="https://github.com/user-attachments/assets/6dd7db1e-f4a6-4279-af71-ebdd71feac9c" /># 👩🏻‍⚕️ Medical Cost Personal Datasets
 
 ## 📌 Solution
 
@@ -74,6 +74,41 @@ Answer:
 <img width="593" height="34" alt="Screenshot 2026-10-20 111619" src="https://github.com/user-attachments/assets/7236102e-e9fc-47fd-8d40-4b6728ec0c07" />
 
 Note: BMI of 53.31 may need further validation.
+
+## Analysis 2: Descriptive Analysis of Insurance Charges
+```sql
+SELECT 
+    ROUND(MIN(charges), 2) AS min_charges,
+    ROUND(MAX(charges), 2) AS max_charges,
+    ROUND(AVG(charges), 2) AS avg_charges,
+    ROUND(STDDEV(charges), 2) AS std_charges,
+    
+    -- Rounded Median Subquery
+    ROUND((
+        SELECT AVG(charges) 
+        FROM (
+            SELECT charges, 
+                   ROW_NUMBER() OVER (ORDER BY charges) AS row_num, 
+                   COUNT(*) OVER () AS total_rows 
+            FROM insurance   
+        ) sub 
+        WHERE row_num IN (FLOOR((total_rows + 1) / 2), CEIL((total_rows + 1) / 2))
+    ), 2) AS median_charges
+
+FROM insurance;
+```
+Answer: <img width="432" height="37" alt="Screenshot 2026-10-20 113101" src="https://github.com/user-attachments/assets/315243c9-f421-4171-b6bf-2da46dc4c847" />  
+
+Key Findings
+
+- The average insurance charge is $13,270.42, while the median is $9,382.03.
+- The mean being higher than the median suggests a potentially right-skewed distribution.
+- Charges range from $1,121.87 to $63,770.43, indicating substantial variability.
+- The standard deviation of $12,105.48 reflects considerable dispersion in insurance charges.
+
+
+
+    
 
 
 
