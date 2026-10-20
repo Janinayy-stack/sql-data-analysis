@@ -2,7 +2,7 @@
 
 ## 📌 Solution
 
-## Quick Validation Process
+## Analysis 1: Data quality assessment
 
 ### 1. Check the total number of rows:
 ```sql
@@ -10,7 +10,8 @@ SELECT COUNT(*) as total_rows
 FROM insurance;
 ```
 Answer:
-<img width="106" height="43" alt="image" src="https://github.com/user-attachments/assets/8e017b27-1ef1-4f7f-a26a-c838701d56d1" />
+<img width="93" height="41" alt="image" src="https://github.com/user-attachments/assets/472e9d82-dfb4-4bfd-b815-249a9912a991" />
+
 ### 2. Check for missing values:
 ```sql
 SELECT
@@ -26,4 +27,29 @@ FROM insurance;
 Answer:
 <img width="605" height="33" alt="image" src="https://github.com/user-attachments/assets/d5a73272-122b-45ba-9cdc-b9484e0e3379" />  
 There are no missing values in any of the variables.
+
+### 3. Check for duplicates based on row:
+```sql
+SELECT
+    age,
+    sex,
+    bmi,
+    children,
+    smoker,
+    region,
+    charges,
+    COUNT(*) AS row_count
+FROM insurance
+GROUP BY
+    age,
+    sex,
+    bmi,
+    children,
+    smoker,
+    region,
+    charges
+HAVING COUNT(*) > 1;
+```
+Answer:
+
 
