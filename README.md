@@ -150,7 +150,7 @@ Answer:
 <img width="168" height="57" alt="image" src="https://github.com/user-attachments/assets/db5728ea-e219-479e-a973-db113b282213" />
 
 Key Findings
-- Smokers have higher average insurance charges ($32,050.23) than nonsmokers ($8,434.27), approximately 3.8 times higher. They also have higher maximum charges and greater variability in charges.
+- Smokers have much higher average insurance charges ($32,050.23) than non-smokers ($8,434.27). On average, smokers pay about 3.8 times more.
 
 ## Analysis 4: Insurance Charges by Individual Characteristics
 
@@ -174,7 +174,7 @@ ORDER BY MIN(age);
 Answer: 
 <img width="308" height="99" alt="image" src="https://github.com/user-attachments/assets/89465f7f-7083-452c-ac8a-d6d472a8c44e" />
 
-Key Findings: Average insurance charges generally increase with age, rising from $9,182.49 among individuals aged 18–29 to $21,248.02 among those aged 60 and above. Average BMI also increases across age groups, but further analysis would be needed to determine how BMI relates to insurance charges.
+Key Findings: Average insurance charges increase with age. Individuals aged 60 and above have the highest average charges ($21,248.02), while those aged 18–29 have the lowest ($9,182.49).
 
 - BMI
 ```sql
@@ -201,7 +201,7 @@ ORDER BY
 Answer:
 <img width="340" height="98" alt="image" src="https://github.com/user-attachments/assets/87b0829b-28f2-4c3f-b62e-d3e5906071ee" />
 
-Key Findings: Individuals in the obese BMI category have the highest average insurance charges ($15,552.34), compared with $10,987.51 for overweight individuals and $10,409.34 for those with normal BMI.
+Key Findings: Individuals in the obese BMI category have the highest average charges ($15,552.34). Those in the normal BMI category have lower average charges ($10,409.34).
 
 -- Sex
 ```sql
@@ -216,7 +216,7 @@ GROUP BY sex;
 Answer:
 <img width="308" height="58" alt="image" src="https://github.com/user-attachments/assets/6dd1fb06-1ca3-4798-9e5a-51739cb26ff6" />
 
-Key Findings: Male individuals have higher average insurance charges ($13,956.75) than female individuals ($12,569.58). Males also have a slightly higher average BMI (30.94 vs. 30.38).
+Key Findings: Males have slightly higher average insurance charges ($13,956.75) than females ($12,569.58). Males also have a slightly higher average BMI.
 
 -- Region
 ```sql
@@ -232,8 +232,47 @@ ORDER BY avg_charges DESC;
 Answer:
 <img width="330" height="99" alt="image" src="https://github.com/user-attachments/assets/2b26d5c3-cfdd-4914-9b90-4ed79c804d08" />
 
-Key Findings: The Southeast region has the highest average insurance charges ($14,735.41) and average BMI (33.36), while the Southwest has the lowest average charges ($12,346.94).
+Key Findings: The Southeast has the highest average insurance charges ($14,735.41), while the Southwest has the lowest ($12,346.94). The Southeast also has the highest average BMI.
 
+## Analysis 5: Combined Factors Associated with Insurance Charges
+
+- Age Group and Smoking Status
+```sql
+SELECT
+    CASE
+        WHEN age BETWEEN 18 AND 29 THEN '18-29'
+        WHEN age BETWEEN 30 AND 39 THEN '30-39'
+        WHEN age BETWEEN 40 AND 49 THEN '40-49'
+        WHEN age BETWEEN 50 AND 59 THEN '50-59'
+        ELSE '60+'
+    END AS age_group,
+    smoker,
+    COUNT(*) AS total_individuals,
+    ROUND(AVG(charges), 2) AS avg_charges
+FROM insurance
+GROUP BY age_group, smoker
+ORDER BY MIN(age), smoker;
+```
+Answer:
+<img width="316" height="193" alt="image" src="https://github.com/user-attachments/assets/bd8699c9-59a6-4be4-8dd2-85552866ccc3" />
+
+Key Findings: Smokers have higher average insurance charges than non-smokers in every age group. Among individuals aged 60 and above, smokers have average charges of $40,630.70, compared with $15,232.71 for non-smokers.
+
+-- Region and Smoking Status
+```sql
+SELECT 
+    region,
+    smoker,
+    COUNT(*) AS total_individuals,
+    ROUND(AVG(charges), 2) AS avg_charges
+FROM insurance
+GROUP BY region, smoker
+ORDER BY region, smoker;
+```
+Answer: 
+<img width="313" height="155" alt="image" src="https://github.com/user-attachments/assets/570c9c59-36ff-400b-9d4b-5fb00764647d" />
+
+Key Findings: Smokers have higher average insurance charges than non-smokers in all four regions. Smokers in the Southeast have the highest average charges ($34,845.00).
 
 
 
